@@ -68,9 +68,7 @@ export function handleNormalMode(char) {
 
     if (state.pendingOp === 'r') {
         if (char.length === 1) {
-            import('../editor/actions.js').then(actions => {
-                actions.doAction('replace-char', char);
-            });
+            doAction('replace-char', char);
         }
         state.pendingOp = '';
         setTimeout(() => updateCmdDisplay(''), 1000);
@@ -87,9 +85,7 @@ export function handleNormalMode(char) {
         } else {
             setInfo(entry.title, entry.detail || '', full, 'success');
             if (entry.action) {
-                import('../editor/actions.js').then(actions => {
-                    actions.doAction(entry.action);
-                });
+                doAction(entry.action);
             }
             state.pendingOp = '';
             setTimeout(() => updateCmdDisplay(''), 1200);

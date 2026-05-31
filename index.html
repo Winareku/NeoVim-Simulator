@@ -14,11 +14,12 @@
 <body data-mode="NORMAL">
 
 <div id="top-bar">
-    <div class="nvim-logo">NVIM</div>
-    <div class="tabs" id="tab-bar">
-        <div class="tab active" data-file="main.js">main.js</div>
-        <div class="tab" data-file="config.lua">config.lua</div>
-        <div class="tab" data-file="readme.md">README.md</div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="nvim-logo">NVIM</div>
+        <button id="btn-reset" class="btn-reset" title="Restaurar estado inicial" role="button">
+            <svg style="width: 12px; height: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8m0 0V3m0 5h5"/></svg>
+            Restaurar
+        </button>
     </div>
     <div style="font-size:0.7rem;color:var(--fg4)">
         <span id="file-info">JavaScript • UTF-8</span>
@@ -27,9 +28,14 @@
 
 <div id="main">
     <div id="editor-section">
+        <div class="tabs" id="tab-bar" role="tablist" aria-label="Archivos abiertos">
+            <div class="tab active" role="tab" aria-selected="true" tabindex="0" data-file="main.js">main.js</div>
+            <div class="tab" role="tab" aria-selected="false" tabindex="0" data-file="config.lua">config.lua</div>
+            <div class="tab" role="tab" aria-selected="false" tabindex="0" data-file="readme.md">README.md</div>
+        </div>
         <div id="editor-pane">
             <div id="line-numbers"></div>
-            <div id="editor-content" tabindex="0"></div>
+            <div id="editor-content" tabindex="0" role="textbox" aria-label="Editor de texto Neovim" aria-multiline="true"></div>
         </div>
 
         <div id="status-line">
@@ -42,10 +48,14 @@
             <div class="sl-position" id="sl-position" style="background:var(--blue);color:var(--fg1)">1:1</div>
         </div>
 
-        <div id="command-bar">
-            <span class="cmd-prompt" id="cmd-prompt" style="display:none">:</span>
-            <span class="cmd-input" id="cmd-input-display"></span>
-            <span class="cmd-msg" id="cmd-msg">-- Presiona : para comandos ex, ? para buscar --</span>
+        <div id="ex-bar" role="search" aria-label="Comandos de Neovim">
+            <div id="ex-mode-label">EX</div>
+            <div id="ex-input-wrap">
+                <span id="ex-colon" aria-hidden="true">:</span>
+                <input id="ex-input" type="text" placeholder="" autocomplete="off" spellcheck="false" aria-label="Entrada de comandos Ex o patrón de búsqueda">
+            </div>
+            <div id="cmd-msg" aria-live="polite" class="cmd-msg"></div>
+            <div id="ex-result" aria-live="polite"></div>
         </div>
     </div>
 
@@ -97,14 +107,6 @@
                 </div>
             </div>
 
-            <div id="ex-bar">
-                <div id="ex-mode-label">EX</div>
-                <div id="ex-input-wrap">
-                    <span id="ex-colon">:</span>
-                    <input id="ex-input" type="text" placeholder="comando ex o patrón..." autocomplete="off" spellcheck="false">
-                </div>
-                <div id="ex-result"></div>
-            </div>
         </div>
     </div>
 </div>

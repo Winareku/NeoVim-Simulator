@@ -1,10 +1,10 @@
-import { state } from './state.js';
-import { FILES, switchFile } from './files.js';
+import { state, enterMode, doSearch } from './state.js';
+import { FILES, switchFile, resetSimulator } from './files.js';
 import { render, updateUI, setInfo, showMsg, updateCmdDisplay } from './editor/render.js';
 import { processCommand } from './commands/modeDispatcher.js';
 import { renderKeyboard, updateKeyboardLabels} from './keyboard/virtualKeyboard.js';
 import { initPhysicalKeyboard } from './keyboard/physicalKeyboard.js';
-import { enterMode } from './state.js';
+import { processExCommand, exResult } from './commands/exCommands.js';
 
 // Inicializar estado con archivo por defecto
 state.lines = [...FILES['main.js'].lines];
@@ -39,17 +39,13 @@ exInput.addEventListener('keydown', (e) => {
         e.preventDefault();
         const prefix = document.getElementById('ex-colon').textContent;
         const cmd = e.target.value;
-        import('./commands/exCommands.js').then(mod => {
-            if (prefix === ':') {
-                mod.processExCommand(cmd);
-            } else if (prefix === '/' || prefix === '?') {
-                state.searchPattern = cmd;
-                import('./editor/actions.js').then(actions => {
-                    actions.doSearch(prefix === '/');
-                });
-                mod.exResult(`Buscando: "${state.searchPattern}"`, 'blue');
-            }
-        });
+        if (prefix === ':') {
+            processExCommand(cmd);
+        } else if (prefix === '/' || prefix === '?') {
+            state.searchPattern = cmd;
+            doSearch(prefix === '/');
+            exResult(`Buscando: "${state.searchPattern}"`, 'blue');
+        }
         e.target.value = '';
         e.target.blur();
         enterMode('NORMAL');
@@ -64,3 +60,9 @@ exInput.addEventListener('keydown', (e) => {
 
 // Exponer algunas funciones globalmente para legacy (no necesario pero seguro)
 window.switchFile = switchFile;
+
+// Event listener para restaurar cambios originales
+document.getElementById('btn-reset').addEventListener('click', () => {
+    resetSimulator();
+    showMsg('✓ Simulador restaurado al estado inicial');
+});

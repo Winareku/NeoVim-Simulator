@@ -133,7 +133,8 @@ export function doAction(action, extraChar) {
             if (!state.clipboard.text) break;
             saveHistory();
             if (state.clipboard.type === 'line') {
-                state.lines.splice(r + 1, 0, state.clipboard.text);
+                const pasteLines = state.clipboard.text.split('\n');
+                state.lines.splice(r + 1, 0, ...pasteLines);
                 state.cursorRow = r + 1;
                 state.cursorCol = 0;
             } else {
@@ -147,7 +148,8 @@ export function doAction(action, extraChar) {
             if (!state.clipboard.text) break;
             saveHistory();
             if (state.clipboard.type === 'line') {
-                state.lines.splice(r, 0, state.clipboard.text);
+                const pasteLines = state.clipboard.text.split('\n');
+                state.lines.splice(r, 0, ...pasteLines);
                 state.cursorCol = 0;
             } else {
                 const newLine = line.slice(0, c) + state.clipboard.text + line.slice(c);

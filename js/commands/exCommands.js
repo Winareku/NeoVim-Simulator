@@ -1,6 +1,6 @@
 import { state } from '../state.js';
 import { saveHistory } from '../state.js';
-import { render, updateUI, showMsg } from '../editor/render.js';
+import { render, updateUI, showMsg, updateCmdDisplay } from '../editor/render.js';
 import { enterMode } from '../state.js';
 
 export function enterExMode(prefix) {
@@ -10,9 +10,9 @@ export function enterExMode(prefix) {
     exInput.value = '';
     exInput.focus();
     state.pendingOp = '';
-    import('../editor/render.js').then(render => render.updateCmdDisplay(''));
-    render.render();
-    render.updateUI();
+    updateCmdDisplay('');
+    render();
+    updateUI();
 }
 
 export function processExCommand(cmd) {

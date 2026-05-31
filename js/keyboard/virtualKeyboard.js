@@ -1,6 +1,7 @@
-import { state } from '../state.js';
+import { state, enterMode, doSearch } from '../state.js';
 import { processCommand } from '../commands/modeDispatcher.js';
 import { render, updateUI, showMsg, setInfo } from '../editor/render.js';
+import { processExCommand, exResult } from '../commands/exCommands.js';
 
 // Layout del teclado virtual
 export const layout = [
@@ -74,6 +75,12 @@ export function renderKeyboard() {
             keyEl.dataset.code = key.c;
             keyEl.dataset.norm = key.n;
             keyEl.dataset.shift = key.s;
+            
+            // Atributos de accesibilidad
+            keyEl.setAttribute('role', 'button');
+            keyEl.setAttribute('tabindex', '-1');
+            keyEl.setAttribute('aria-label', `Tecla ${key.n}`);
+            
             const mainSpan = document.createElement('span');
             mainSpan.className = 'key-main';
             mainSpan.textContent = key.n;
@@ -89,6 +96,7 @@ export function renderKeyboard() {
             });
             rowEl.appendChild(keyEl);
         });
+        rowEl.setAttribute('role', 'row');
         kb.appendChild(rowEl);
     });
     updateKeyHints();
@@ -126,23 +134,20 @@ export function simulateKeyPress(keyInfo) {
         } else if (char === 'Enter') {
             const prefix = document.getElementById('ex-colon').textContent;
             const val = exInput.value;
-            import('../commands/exCommands.js').then(ex => {
-                if (prefix === ':') ex.processExCommand(val);
-                else if (prefix === '/' || prefix === '?') {
-                    state.searchPattern = val;
-                    import('../editor/actions.js').then(actions => {
-                        actions.doSearch(prefix === '/');
-                    });
-                    ex.exResult(`Buscando: "${state.searchPattern}"`, 'blue');
-                }
-            });
+            if (prefix === ':') {
+                processExCommand(val);
+            } else if (prefix === '/' || prefix === '?') {
+                state.searchPattern = val;
+                doSearch(prefix === '/');
+                exResult(`Buscando: "${state.searchPattern}"`, 'blue');
+            }
             exInput.value = '';
             exInput.blur();
-            import('../state.js').then(s => s.enterMode('NORMAL'));
+            enterMode('NORMAL');
         } else if (char === 'Escape' || char === 'Esc') {
             exInput.value = '';
             exInput.blur();
-            import('../state.js').then(s => s.enterMode('NORMAL'));
+            enterMode('NORMAL');
         } else if (char.length === 1) {
             exInput.value += char;
         }

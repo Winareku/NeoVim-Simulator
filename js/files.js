@@ -102,9 +102,23 @@ export function switchFile(fname) {
     state.pendingOp = '';
     state.modified = false;
     enterMode('NORMAL');
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.file === fname));
+    document.querySelectorAll('.tab').forEach(t => {
+        const isActive = t.dataset.file === fname;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
     document.getElementById('file-info').textContent = FILES[fname].lang;
     render();
     updateUI();
     showMsg(`"${fname}" cargado — ${state.lines.length} líneas`);
+}
+
+// Resguardo de los contenidos iniciales para restauración
+const INITIAL_FILES = JSON.parse(JSON.stringify(FILES));
+
+export function resetSimulator() {
+    Object.keys(INITIAL_FILES).forEach(key => {
+        FILES[key].lines = [...INITIAL_FILES[key].lines];
+    });
+    switchFile('main.js');
 }

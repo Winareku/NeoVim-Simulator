@@ -70,18 +70,13 @@ export function setInfo(title, detail, cmd, type) {
 let msgTimeout;
 export function showMsg(msg) {
     const el = document.getElementById('cmd-msg');
-    document.getElementById('cmd-prompt').style.display = 'none';
-    el.textContent = msg;
+    if (el) el.textContent = msg;
     clearTimeout(msgTimeout);
     msgTimeout = setTimeout(() => {
-        if (state.mode === 'NORMAL') el.textContent = '-- Presiona : para comandos ex, ? para buscar --';
+        if (state.mode === 'NORMAL' && el) el.textContent = '';
     }, 3000);
 }
 
 export function updateCmdDisplay(cmd) {
     document.getElementById('cmd-display').textContent = cmd;
-}
-
-export function updateKeyHints() {
-    // Esta función se llama desde virtualKeyboard.js
 }

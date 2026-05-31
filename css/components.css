@@ -9,9 +9,13 @@
     color: var(--fg4);
     flex-shrink: 0;
 }
-#top-bar .tabs {
+.tabs {
     display: flex;
     gap: 2px;
+    background: var(--bg-soft);
+    padding: 5px 6px 0;
+    border-bottom: 1px solid var(--bg2);
+    z-index: 10;
 }
 .tab {
     padding: 3px 14px;
@@ -23,6 +27,7 @@
     border: 1px solid var(--bg2);
     border-bottom: none;
     transition: all 0.15s;
+    margin-bottom: -1px;
 }
 .tab.active {
     background: var(--bg);
@@ -197,3 +202,42 @@ body[data-mode="V-LINE"]  #mode-badge,
 body[data-mode="V-LINE"]  .sl-mode { background: var(--orange); color: var(--fg1); }
 body[data-mode="V-BLOCK"] #mode-badge,
 body[data-mode="V-BLOCK"] .sl-mode { background: var(--orange); color: var(--fg1); }
+
+/* Restaurar Button Styling */
+.btn-reset {
+    background: var(--bg2);
+    color: var(--fg1);
+    border: 1px solid var(--bg3);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    font-weight: 500;
+}
+.btn-reset:hover {
+    background: var(--red);
+    border-color: var(--red-bright);
+    color: var(--fg1);
+}
+.btn-reset svg {
+    transition: transform 0.3s ease;
+}
+.btn-reset:hover svg {
+    transform: rotate(-180deg);
+}
+
+/* Command Message within bottom Ex bar */
+.cmd-msg {
+    padding: 0 10px;
+    font-size: 0.72rem;
+    color: var(--fg4);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

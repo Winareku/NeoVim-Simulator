@@ -69,11 +69,11 @@ export function enterMode(mode) {
     document.getElementById('sl-position').style.background = modeColors[mode] || 'var(--blue)';
 
     if (mode === 'INSERT') {
-        import('./utils/dom.js').then(dom => dom.setInfo('→ Modo INSERT', 'Escribe texto libremente. Presiona Esc para volver a Normal.', '', 'success'));
+        import('./editor/render.js').then(r => r.setInfo('→ Modo INSERT', 'Escribe texto libremente. Presiona Esc para volver a Normal.', '', 'success'));
     } else if (mode === 'VISUAL') {
-        import('./utils/dom.js').then(dom => dom.setInfo('→ Modo VISUAL', 'Muévete para seleccionar texto. d=borrar, y=copiar, c=cambiar.', '', 'visual'));
+        import('./editor/render.js').then(r => r.setInfo('→ Modo VISUAL', 'Muévete para seleccionar texto. d=borrar, y=copiar, c=cambiar.', '', 'visual'));
     } else if (mode === 'COMMAND') {
-        import('./utils/dom.js').then(dom => dom.setInfo('→ Modo EX COMMAND', 'Escribe en la barra inferior.', '', 'command'));
+        import('./editor/render.js').then(r => r.setInfo('→ Modo EX COMMAND', 'Escribe en la barra inferior.', '', 'command'));
     }
 
     if (mode === 'NORMAL' && prevMode === 'INSERT') {
@@ -97,9 +97,9 @@ export function doSearch(forward) {
         if (idx !== -1) {
             state.cursorRow = row;
             state.cursorCol = idx;
-            import('./utils/dom.js').then(dom => dom.showMsg(`/${pat}  línea ${row + 1}`));
+            import('./editor/render.js').then(r => r.showMsg(`/${pat}  línea ${row + 1}`));
             return;
         }
     }
-    import('./utils/dom.js').then(dom => dom.showMsg(`Patrón no encontrado: "${pat}"`));
+    import('./editor/render.js').then(r => r.showMsg(`Patrón no encontrado: "${pat}"`));
 }
