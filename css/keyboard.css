@@ -1,0 +1,87 @@
+#keyboard-section {
+    background: var(--bg-soft);
+    padding: 10px 0 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow: hidden;
+}
+.kb-label {
+    font-size: 0.6rem;
+    color: var(--fg4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+    padding-left: 10px;
+}
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 10px;
+}
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+.key {
+    background: var(--bg1);
+    color: var(--fg);
+    border-radius: 5px;
+    height: 38px;
+    min-width: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    cursor: pointer;
+    border: 1px solid var(--bg2);
+    box-shadow: 0 3px 0 var(--bg-hard), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: background 0.08s, transform 0.06s, box-shadow 0.06s;
+    padding: 0 6px;
+    user-select: none;
+}
+.key:hover {
+    background: var(--bg2);
+}
+.key.active {
+    background: var(--orange-b) !important;
+    color: var(--bg-hard) !important;
+    box-shadow: 0 0 0 var(--bg-hard), inset 0 1px 0 rgba(255,255,255,0.1);
+    transform: translateY(3px);
+    font-weight: 700;
+}
+.key.has-cmd {
+    border-bottom: 2px solid var(--aqua);
+}
+.key.shift-active {
+    background: var(--purple) !important;
+    color: var(--fg1) !important;
+}
+.key-main {
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+.key-hint {
+    font-size: 0.48rem;
+    color: var(--aqua-b);
+    line-height: 1;
+    text-align: center;
+    max-width: 38px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.key[data-code="Escape"] { min-width: 42px; }
+.key[data-code="Backspace"] { min-width: 62px; }
+.key[data-code="Tab"] { min-width: 52px; }
+.key[data-code="Backslash"] { min-width: 50px; }
+.key[data-code="CapsLock"] { min-width: 62px; }
+.key[data-code="Enter"] { min-width: 72px; background: var(--aqua); color: var(--bg-hard); border-color: var(--aqua); }
+.key[data-code="ShiftLeft"], .key[data-code="ShiftRight"] { min-width: 84px; background: var(--purple); color: var(--bg-hard); border-color: var(--purple); }
+.key[data-code="Space"] { min-width: 220px; }
+.key[data-code="ControlLeft"], .key[data-code="ControlRight"] { min-width: 54px; background: var(--bg2); }
+.key[data-code="AltLeft"], .key[data-code="AltRight"] { min-width: 46px; }

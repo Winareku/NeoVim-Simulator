@@ -1,0 +1,143 @@
+#editor-pane {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+#line-numbers {
+    padding: 8px 0;
+    text-align: right;
+    width: 42px;
+    flex-shrink: 0;
+    background: var(--bg);
+    color: var(--bg4);
+    font-size: 0.78rem;
+    line-height: 1.55rem;
+    border-right: 1px solid var(--bg1);
+    user-select: none;
+    overflow: hidden;
+}
+#line-numbers span {
+    display: block;
+    padding-right: 8px;
+    transition: color 0.1s;
+}
+#line-numbers span.current {
+    color: var(--yellow-b);
+    font-weight: 700;
+}
+
+#editor-content {
+    flex: 1;
+    padding: 8px 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    outline: none;
+    font-size: 0.82rem;
+    line-height: 1.55rem;
+    white-space: pre;
+    position: relative;
+}
+
+.editor-line {
+    display: block;
+    min-height: 1.55rem;
+    white-space: pre;
+    position: relative;
+}
+.editor-line.current-line {
+    background: rgba(60, 56, 54, 0.5);
+}
+.editor-line .vim-cursor {
+    display: inline-block;
+    background: var(--fg);
+    color: var(--bg);
+    min-width: 0.52rem;
+    font-weight: bold;
+}
+.editor-line .vim-cursor.insert-cursor {
+    background: transparent;
+    color: var(--fg);
+    border-left: 2px solid var(--green-b);
+    min-width: 0;
+}
+.editor-line .vim-cursor.visual-cursor {
+    background: var(--bg3);
+    color: var(--yellow-b);
+}
+.editor-line .visual-selection {
+    background: var(--bg3);
+    color: var(--yellow-b);
+}
+
+/* Status line */
+#status-line {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    font-size: 0.72rem;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.sl-mode {
+    padding: 0 12px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    transition: background 0.15s;
+}
+.sl-filename {
+    padding: 0 10px;
+    color: var(--fg2);
+    flex: 1;
+    background: var(--bg1);
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.sl-info {
+    padding: 0 10px;
+    color: var(--fg4);
+    background: var(--bg1);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.sl-position {
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+}
+
+/* Command bar */
+#command-bar {
+    height: 22px;
+    background: var(--bg-hard);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--bg1);
+    flex-shrink: 0;
+}
+#command-bar .cmd-prompt {
+    color: var(--yellow-b);
+    font-weight: 700;
+    margin-right: 4px;
+}
+#command-bar .cmd-input {
+    color: var(--fg1);
+    flex: 1;
+}
+#command-bar .cmd-msg {
+    color: var(--fg4);
+    flex: 1;
+    font-style: italic;
+}

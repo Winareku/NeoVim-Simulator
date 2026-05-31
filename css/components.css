@@ -1,0 +1,199 @@
+#top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--bg2);
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    color: var(--fg4);
+    flex-shrink: 0;
+}
+#top-bar .tabs {
+    display: flex;
+    gap: 2px;
+}
+.tab {
+    padding: 3px 14px;
+    border-radius: 4px 4px 0 0;
+    background: var(--bg1);
+    color: var(--fg4);
+    font-size: 0.78rem;
+    cursor: pointer;
+    border: 1px solid var(--bg2);
+    border-bottom: none;
+    transition: all 0.15s;
+}
+.tab.active {
+    background: var(--bg);
+    color: var(--yellow-b);
+    border-color: var(--bg3);
+}
+.tab .modified {
+    color: var(--orange-b);
+    margin-left: 4px;
+}
+#top-bar .nvim-logo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--green-b);
+    letter-spacing: 1px;
+}
+
+#info-panel {
+    background: var(--bg-soft);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--bg2);
+    flex-shrink: 0;
+}
+#info-title {
+    font-size: 0.65rem;
+    color: var(--aqua-b);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+#mode-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+}
+#desc-main {
+    font-size: 1rem;
+    color: var(--fg1);
+    font-weight: 500;
+    margin-bottom: 4px;
+    min-height: 1.4em;
+    transition: all 0.2s;
+}
+#desc-detail {
+    font-size: 0.72rem;
+    color: var(--fg4);
+    line-height: 1.5;
+    min-height: 2.5em;
+}
+#cmd-display {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--yellow-b);
+    background: var(--bg1);
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+    display: inline-block;
+    min-width: 2rem;
+    min-height: 1.4em;
+}
+
+#cheatsheet-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 12px 15px;
+    margin-top: 10px;
+    background: var(--bg-soft);
+    border-top: 1px solid var(--bg2);
+    overflow-y: auto;
+    flex: 1;
+}
+.cs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.cs-col h3 {
+    color: var(--aqua-b);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--bg2);
+    padding-bottom: 4px;
+}
+.cs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cs-key {
+    background: var(--bg1);
+    color: var(--yellow-b);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border: 1px solid var(--bg2);
+}
+.cs-desc {
+    font-size: 0.65rem;
+    color: var(--fg4);
+    text-align: right;
+}
+
+#ex-bar {
+    margin-top: auto;
+    border-top: 1px solid var(--bg2);
+    background: var(--bg-hard);
+    display: flex;
+    align-items: center;
+    height: 34px;
+    flex-shrink: 0;
+}
+#ex-mode-label {
+    padding: 0 10px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--bg-hard);
+    background: var(--yellow-b);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+}
+#ex-input-wrap {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding: 0 10px;
+}
+#ex-colon {
+    color: var(--yellow-b);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-right: 3px;
+}
+#ex-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--fg1);
+    font-family: inherit;
+    font-size: 0.82rem;
+    flex: 1;
+}
+#ex-result {
+    padding: 0 10px;
+    font-size: 0.7rem;
+    font-style: italic;
+}
+
+/* Mode colors applied dynamically */
+body[data-mode="NORMAL"]  #mode-badge,
+body[data-mode="NORMAL"]  .sl-mode { background: var(--blue);   color: var(--fg1); }
+body[data-mode="INSERT"]  #mode-badge,
+body[data-mode="INSERT"]  .sl-mode { background: var(--green);  color: var(--fg1); }
+body[data-mode="VISUAL"]  #mode-badge,
+body[data-mode="VISUAL"]  .sl-mode { background: var(--orange); color: var(--fg1); }
+body[data-mode="COMMAND"] #mode-badge,
+body[data-mode="COMMAND"] .sl-mode { background: var(--yellow); color: var(--bg); }
+body[data-mode="REPLACE"] #mode-badge,
+body[data-mode="REPLACE"] .sl-mode { background: var(--purple); color: var(--fg1); }
+body[data-mode="V-LINE"]  #mode-badge,
+body[data-mode="V-LINE"]  .sl-mode { background: var(--orange); color: var(--fg1); }
+body[data-mode="V-BLOCK"] #mode-badge,
+body[data-mode="V-BLOCK"] .sl-mode { background: var(--orange); color: var(--fg1); }

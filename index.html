@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoVim Simulator — Gruvbox Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/keyboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body data-mode="NORMAL">
+
+<div id="top-bar">
+    <div class="nvim-logo">NVIM</div>
+    <div class="tabs" id="tab-bar">
+        <div class="tab active" data-file="main.js">main.js</div>
+        <div class="tab" data-file="config.lua">config.lua</div>
+        <div class="tab" data-file="readme.md">README.md</div>
+    </div>
+    <div style="font-size:0.7rem;color:var(--fg4)">
+        <span id="file-info">JavaScript • UTF-8</span>
+    </div>
+</div>
+
+<div id="main">
+    <div id="editor-section">
+        <div id="editor-pane">
+            <div id="line-numbers"></div>
+            <div id="editor-content" tabindex="0"></div>
+        </div>
+
+        <div id="status-line">
+            <div class="sl-mode" id="sl-mode">NORMAL</div>
+            <div class="sl-filename" id="sl-filename">main.js [Modified]</div>
+            <div class="sl-info" id="sl-info">
+                <span>js</span>
+                <span id="sl-clipboard">reg: ""</span>
+            </div>
+            <div class="sl-position" id="sl-position" style="background:var(--blue);color:var(--fg1)">1:1</div>
+        </div>
+
+        <div id="command-bar">
+            <span class="cmd-prompt" id="cmd-prompt" style="display:none">:</span>
+            <span class="cmd-input" id="cmd-input-display"></span>
+            <span class="cmd-msg" id="cmd-msg">-- Presiona : para comandos ex, ? para buscar --</span>
+        </div>
+    </div>
+
+    <div id="right-section">
+        <div id="info-panel">
+            <div id="info-title">ACCIÓN DETECTADA</div>
+            <div id="mode-badge">NORMAL</div>
+            <div id="desc-main">Listo. Presiona una tecla o haz clic en el teclado.</div>
+            <div id="desc-detail">Modo Normal: el modo base de Neovim. Usa hjkl para moverte.</div>
+            <div id="cmd-display"></div>
+        </div>
+
+        <div id="keyboard-section">
+            <div class="kb-label">Teclado Virtual — haz clic o usa el físico</div>
+            <div id="keyboard"></div>
+
+            <div id="cheatsheet-grid">
+                <div class="cs-col">
+                    <h3>Movimiento</h3>
+                    <div class="cs-row"><span class="cs-key">hjkl</span><span class="cs-desc">← ↓ ↑ →</span></div>
+                    <div class="cs-row"><span class="cs-key">w/b/e</span><span class="cs-desc">palabras</span></div>
+                    <div class="cs-row"><span class="cs-key">0 / $</span><span class="cs-desc">inicio / fin línea</span></div>
+                    <div class="cs-row"><span class="cs-key">gg / G</span><span class="cs-desc">inicio / fin doc</span></div>
+                    <div class="cs-row"><span class="cs-key">Ctrl+d/u</span><span class="cs-desc">½ pág abaj/arrib</span></div>
+                </div>
+                <div class="cs-col">
+                    <h3>Insert / Edición</h3>
+                    <div class="cs-row"><span class="cs-key">i / a</span><span class="cs-desc">insert / append</span></div>
+                    <div class="cs-row"><span class="cs-key">I / A</span><span class="cs-desc">inicio / fin línea</span></div>
+                    <div class="cs-row"><span class="cs-key">o / O</span><span class="cs-desc">nueva línea</span></div>
+                    <div class="cs-row"><span class="cs-key">x</span><span class="cs-desc">borrar char</span></div>
+                    <div class="cs-row"><span class="cs-key">u / Ctrl+r</span><span class="cs-desc">undo / redo</span></div>
+                </div>
+                <div class="cs-col">
+                    <h3>Operadores / Visual</h3>
+                    <div class="cs-row"><span class="cs-key">dd / dw</span><span class="cs-desc">borrar líne/palb</span></div>
+                    <div class="cs-row"><span class="cs-key">cc / cw</span><span class="cs-desc">cambiar líne/palb</span></div>
+                    <div class="cs-row"><span class="cs-key">yy / p</span><span class="cs-desc">copiar / pegar</span></div>
+                    <div class="cs-row"><span class="cs-key">v / V</span><span class="cs-desc">visual char/línea</span></div>
+                    <div class="cs-row"><span class="cs-key">Ctrl+v</span><span class="cs-desc">visual bloque</span></div>
+                </div>
+                <div class="cs-col">
+                    <h3>Comandos Ex</h3>
+                    <div class="cs-row"><span class="cs-key">:w / :q</span><span class="cs-desc">guardar / salir</span></div>
+                    <div class="cs-row"><span class="cs-key">:wq / :q!</span><span class="cs-desc">guard y sal/forz</span></div>
+                    <div class="cs-row"><span class="cs-key">/patron</span><span class="cs-desc">buscar</span></div>
+                    <div class="cs-row"><span class="cs-key">:s/a/b</span><span class="cs-desc">reemplazar líne</span></div>
+                    <div class="cs-row"><span class="cs-key">:%s/a/b/g</span><span class="cs-desc">reemp global</span></div>
+                </div>
+            </div>
+
+            <div id="ex-bar">
+                <div id="ex-mode-label">EX</div>
+                <div id="ex-input-wrap">
+                    <span id="ex-colon">:</span>
+                    <input id="ex-input" type="text" placeholder="comando ex o patrón..." autocomplete="off" spellcheck="false">
+                </div>
+                <div id="ex-result"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="help-bar">
+    <div><span>Esc</span>Normal</div>
+    <div><span>i/a/o</span>Insert</div>
+    <div><span>v/V</span>Visual</div>
+    <div><span>:</span>Ex cmd</div>
+    <div><span>u</span>Undo</div>
+    <div><span>Ctrl+r</span>Redo</div>
+    <div><span>gg/G</span>Inicio/Fin</div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
