@@ -53,14 +53,26 @@ export const layout = [
 ];
 
 export const KEY_HINTS = {
-    'h': '← move', 'j': '↓ move', 'k': '↑ move', 'l': '→ move',
+    // Normal mode — lowercase / unshifted
+    'h': '← move',    'j': '↓ move',    'k': '↑ move',    'l': '→ move',
     'w': 'next word', 'b': 'prev word', 'e': 'end word',
-    'i': 'INSERT', 'a': 'append', 'o': 'open ↓', 'A': 'end+ins', 'I': 'start+ins',
-    'd': 'delete', 'c': 'change', 'y': 'yank', 'p': 'paste',
-    'u': 'undo', 'r': 'replace', 'v': 'visual', 'x': 'del char',
-    'g': 'go to', 'G': 'EOF', 'D': 'del EOL', 'Y': 'yank line',
-    '0': 'line start', '$': 'line end', 'Esc': 'NORMAL',
-    'dd': 'del line', 'yy': 'yank line',
+    'i': 'INSERT',    'a': 'append',    'o': 'open ↓',
+    'd': 'delete',    'c': 'change',    'y': 'yank',      'p': 'paste',
+    'u': 'undo',      'r': 'replace',   'v': 'visual',    'x': 'del char',
+    'g': 'go to',     'n': 'next match','q': 'macro',
+    '0': 'line start','Esc': 'NORMAL',
+    // Normal mode — SHIFTED (uppercase / symbols)
+    'A': 'end+ins',  'I': 'start+ins', 'O': 'open ↑',
+    'D': 'del EOL',  'C': 'chg EOL',   'Y': 'yank line',
+    'G': 'EOF',      'J': 'join lines','P': 'paste ↑',
+    'R': 'REPLACE',  'V': 'V-LINE',    'X': 'del back',
+    'N': 'prev match','U': 'redo line',
+    '$': 'line end', '^': 'first char','{': 'para ↑',    '}': 'para ↓',
+    // Ctrl combos
+    'Ctrl+r': 'redo', 'Ctrl+d': 'half ↓','Ctrl+u': 'half ↑',
+    'Ctrl+v': 'V-BLOCK',
+    // Symbols useful in normal mode
+    ';': 'ex cmd',
 };
 
 export function renderKeyboard() {
@@ -110,6 +122,7 @@ export function simulateKeyPress(keyInfo) {
     }
     if (keyInfo.c.includes('Control')) {
         state.isCtrlDown = !state.isCtrlDown;
+        updateKeyboardLabels(); // triggers updateKeyHints internally
         return;
     }
 
@@ -159,26 +172,49 @@ export function simulateKeyPress(keyInfo) {
     processCommand(char, true);
     if (state.isVirtualShift) { state.isVirtualShift = false; updateKeyboardLabels(); }
     if (state.isCtrlDown) state.isCtrlDown = false;
+    updateKeyHints();
 }
 
 export function updateKeyboardLabels() {
+    const isShifted = state.isShiftDown || state.isVirtualShift;
     document.querySelectorAll('.key').forEach(k => {
         const mainSpan = k.querySelector('.key-main');
         if (mainSpan) {
-            mainSpan.textContent = (state.isShiftDown || state.isVirtualShift) ? k.dataset.shift : k.dataset.norm;
+            mainSpan.textContent = isShifted ? k.dataset.shift : k.dataset.norm;
         }
         if (k.dataset.code?.includes('Shift')) {
             if (state.isVirtualShift) k.classList.add('shift-active');
             else k.classList.remove('shift-active');
         }
     });
+    // Refresh hints immediately so they reflect the new shifted/unshifted characters
+    updateKeyHints();
 }
 
 export function updateKeyHints() {
+    const isShifted = state.isShiftDown || state.isVirtualShift;
+    const isCtrl   = state.isCtrlDown;
     document.querySelectorAll('.key').forEach(k => {
-        const norm = k.dataset.norm;
         const hintEl = k.querySelector('.key-hint');
         if (!hintEl) return;
-        hintEl.textContent = state.mode === 'NORMAL' ? (KEY_HINTS[norm] || KEY_HINTS[norm?.toUpperCase()] || '') : '';
+
+        if (state.mode !== 'NORMAL') {
+            hintEl.textContent = '';
+            k.classList.remove('has-cmd');
+            return;
+        }
+
+        // Determine which character this key currently represents
+        const char = isShifted ? k.dataset.shift : k.dataset.norm;
+        let lookupKey = char;
+        if (isCtrl && char && char.length === 1) lookupKey = `Ctrl+${char.toLowerCase()}`;
+
+        const hint = KEY_HINTS[lookupKey] || '';
+        hintEl.textContent = hint;
+        if (hint) {
+            k.classList.add('has-cmd');
+        } else {
+            k.classList.remove('has-cmd');
+        }
     });
 }

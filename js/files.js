@@ -120,5 +120,6 @@ export function resetSimulator() {
     Object.keys(INITIAL_FILES).forEach(key => {
         FILES[key].lines = [...INITIAL_FILES[key].lines];
     });
+    state.lines = [...FILES[state.currentFile].lines]; // Restablecer estado activo antes de cambiar de archivo para evitar auto-guardar cambios
     switchFile('main.js');
 }

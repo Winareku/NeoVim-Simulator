@@ -138,9 +138,20 @@ export function doAction(action, extraChar) {
                 state.cursorRow = r + 1;
                 state.cursorCol = 0;
             } else {
-                const newLine = line.slice(0, c + 1) + state.clipboard.text + line.slice(c + 1);
-                state.lines[r] = newLine;
-                state.cursorCol = c + state.clipboard.text.length;
+                const pasteLines = state.clipboard.text.split('\n');
+                const before = line.slice(0, c + 1);
+                const after = line.slice(c + 1);
+                if (pasteLines.length === 1) {
+                    state.lines[r] = before + pasteLines[0] + after;
+                    state.cursorCol = c + pasteLines[0].length;
+                } else {
+                    state.lines[r] = before + pasteLines[0];
+                    const middle = pasteLines.slice(1, -1);
+                    const last = pasteLines[pasteLines.length - 1] + after;
+                    state.lines.splice(r + 1, 0, ...middle, last);
+                    state.cursorRow = r + pasteLines.length - 1;
+                    state.cursorCol = pasteLines[pasteLines.length - 1].length - 1;
+                }
             }
             break;
         }
@@ -152,9 +163,20 @@ export function doAction(action, extraChar) {
                 state.lines.splice(r, 0, ...pasteLines);
                 state.cursorCol = 0;
             } else {
-                const newLine = line.slice(0, c) + state.clipboard.text + line.slice(c);
-                state.lines[r] = newLine;
-                state.cursorCol = c + state.clipboard.text.length - 1;
+                const pasteLines = state.clipboard.text.split('\n');
+                const before = line.slice(0, c);
+                const after = line.slice(c);
+                if (pasteLines.length === 1) {
+                    state.lines[r] = before + pasteLines[0] + after;
+                    state.cursorCol = c + pasteLines[0].length - 1;
+                } else {
+                    state.lines[r] = before + pasteLines[0];
+                    const middle = pasteLines.slice(1, -1);
+                    const last = pasteLines[pasteLines.length - 1] + after;
+                    state.lines.splice(r + 1, 0, ...middle, last);
+                    state.cursorRow = r + pasteLines.length - 1;
+                    state.cursorCol = pasteLines[pasteLines.length - 1].length - 1;
+                }
             }
             break;
         }

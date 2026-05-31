@@ -241,3 +241,14 @@ body[data-mode="V-BLOCK"] .sl-mode { background: var(--orange); color: var(--fg1
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Syntax Highlighting Colors (Gruvbox Theme) */
+.hl-comment { color: var(--gray); font-style: italic; }
+.hl-string { color: var(--green-b); }
+.hl-keyword { color: var(--orange-b); font-weight: 700; }
+.hl-number { color: var(--purple-b); }
+.hl-builtin { color: var(--yellow-b); }
+.hl-header { color: var(--orange-b); font-weight: 700; }
+.hl-bold { color: var(--yellow-b); font-weight: 700; }
+.hl-code { color: var(--aqua-b); }
+.hl-list { color: var(--aqua-b); }
